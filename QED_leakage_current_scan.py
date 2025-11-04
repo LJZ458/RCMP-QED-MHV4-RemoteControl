@@ -10,7 +10,7 @@ def log(text):
 #####check USB connection and verify port. Need to chmod 666 to allow read and write
 mymhv4 = mhv4lib.MHV4('/dev/ttyUSB0', baud=9600)
 
-scan_voltages = np.arange(0.5, 200.5, 0.5) # 0.5 V up to 30.0 V in 0.5 V steps
+scan_voltages = np.arange(0.5, 200.5, 0.5) # 0.5 V up to 195.0 V in 0.5 V steps
 
 channels = [0]
 #####create a 2d array with col1 voltage, col2... for leakage currents of channel2.....
