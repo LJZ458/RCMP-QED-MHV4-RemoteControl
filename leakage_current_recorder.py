@@ -17,7 +17,7 @@ preset_Volt = 170
 
 
 channels = [0]
-#####create a 2d array with col1 voltage, col2... for leakage currents of channel2.....
+#####create a 2d array with col1 time, col2... for leakage currents of channel2.....
 leak = np.zeros( ( t_dur, (len(channels)+1) ) )
 
 ##initialize 2d array with col1 of time col2....... of leakage currents
@@ -60,13 +60,13 @@ while true:
 		for ch in channels:
 			cur = mymhv4.get_current(ch)
 			leak[i][ch+1] = mymhv4.get_current(ch)
-			leak[i][0] = datetime.now()
+			leak[i][0] = datetime.now().strftime("%Y%m%d_%H%M%S")
 			if cur > 2.5:  # operation safety check
 			## for BB7 1mm thick DSSSD the leakage current will ramp above 1uA but shouldn't be higher than 2.5 
 			print("CURRENT LIMIT REACHED! STOPPING !!!!")
 				exit()
-			i = i+1
-			time.sleep(300)
+			i = i+1	
+		time.sleep(300)
 	
 	output_str = current_datetime + ".txt"
 	np.savetxt(output_str, leak, fmt='%.3f', delimiter=' ')
