@@ -3,7 +3,7 @@
 
 # Leakage current monitor for BB7 DSSSD — writes to file every 5 minutes
 # This is a test version for utility development
-
+import sys
 import mhv4lib
 import time
 from datetime import datetime
@@ -60,42 +60,4 @@ for step in range(11):
 
     log(f"Ramped to {v:.1f} V")
     time.sleep(10)
-
-# ---------- OPEN OUTPUT FILE ----------
-t0 = datetime.now().strftime("%Y%m%d_%H%M%S")
-f1name = f"leak_stream_MHV4_1_{t0}.txt"
-
-with open(f1name, "w") as f1:
-    f1.write("# time  current(uA)\n")
-
-log("\nStarting continuous 5-minute logging...\n")
-
-point = 0
-
-# Infinite loop until stopped manually
-while True:
-
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    for ch in channels:
-        cur1 = MHV4_1.get_current(ch)
-
-        if abs(cur1) > 1.0:
-            print("CURRENT LIMIT REACHED — SHUTTING DOWN ALL CHANNELS!")
-
-            for ch_shutdown in channels:
-                MHV4_1.set_voltage(ch_shutdown, 0)
-                time.sleep(1)
-
-            time.sleep(300)
-
-            for ch_shutdown in channels:
-                MHV4_1.set_off(ch_shutdown)
-
-            exit()
-
-        with open(f1name, "a") as f1:
-            f1.write(f"{timestamp} {cur1:.6f}\n")
-
-    point += 1
-    time.sleep(SLEEP_TIME)
+sys.exit(0)
