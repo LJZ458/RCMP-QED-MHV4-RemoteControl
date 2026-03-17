@@ -13,7 +13,7 @@ __copyright__ = "2018 Joonas Konki"
 import serial
 import time
 import re
-from lockfile import LockFile
+#from lockfile import LockFile
 
 VOLTAGE_LIMIT = 220
 LOCK_TIMEOUT = 5
